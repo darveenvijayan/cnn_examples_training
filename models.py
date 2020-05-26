@@ -1,6 +1,6 @@
 from torch import nn
 class AlexNet(nn.Module):
-	def __init__(self, num_classes=1000):
+	def __init__(self, num_classes=10):
 		super(AlexNet, self).__init__()
 		self.conv_base = nn.Sequential(
 			nn.Conv2d(3, 96, kernel_size=11, stride=4, padding=2, bias=False),
