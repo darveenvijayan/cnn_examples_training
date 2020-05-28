@@ -26,11 +26,11 @@ class AlexNetDataset(Dataset):
 		self.labels_dict = {}
 		for i, my_class in enumerate(classes):
 			if train:
-				self.imgs.extend([os.path.join(root, my_class, img) for img in  os.listdir(os.path.join(root, my_class))[:train_val]])
+				self.imgs.extend([os.path.join(root, my_class, img) for img in os.listdir(os.path.join(root, my_class))[:train_val]])
 				self.labels_idx.extend([i] * train_val)
 			else:
-				self.imgs.extend(os.listdir(os.path.join(root, my_class))[train_val:n_class])
-				self.labels_idx.append([i] * (n_class - train_val))
+				self.imgs.extend([os.path.join(root, my_class, img) for img in os.listdir(os.path.join(root, my_class))[train_val:n_class]])
+				self.labels_idx.extend([i] * (n_class - train_val))
 			self.labels_dict[i] = my_class
 
 	def __len__(self):
@@ -46,7 +46,7 @@ class AlexNetDataset(Dataset):
 		if self.model == 'AlexNet':
 			if self.train:
 				trans = transforms.Compose([
-					transforms.Resize(256),
+					transforms.Resize((256, 256)),
 					transforms.RandomCrop(224),
 					transforms.RandomHorizontalFlip(0.5),
 					transforms.ToTensor(),
@@ -54,7 +54,7 @@ class AlexNetDataset(Dataset):
 				])
 			else:
 				trans = transforms.Compose([
-					transforms.Resize(224),
+					transforms.Resize((224, 224)),
 					transforms.ToTensor(),
 					transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
 				])

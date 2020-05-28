@@ -37,6 +37,6 @@ class AlexNet(nn.Module):
 
 	def forward(self, x):
 		x = self.conv_base(x)
-		x = x.view(x.size(0), 256 * 6 * 6)
+		x = x.view(x.size(0), 256 * 6 * 6) # resize for fc layers
 		x = self.fc_base(x)
 		return x
